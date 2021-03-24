@@ -10,7 +10,7 @@ pipeline {
 		  echo "hello-world!"
 		  script {
 			env.testSkip = input message: 'Skip this stage or not?', 
-		    	parameters: [string(defaultValue: 'skip', description: '', name: 'response'])
+		    	parameters: [string(defaultValue: 'skip', description: '', name: 'response')])
 			echo "Response: ${testSkip}"
 		  }
     		}
