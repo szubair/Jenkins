@@ -7,8 +7,13 @@ pipeline {
     stages {
         stage('TEST'){
 		steps {
-		  input 'would u like to proceed!'
 		  echo "hello-world!"
+		  script {
+			userInput = input(id: 'Proceed1', message: 'Was this successful?', 
+		    	parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, 
+		    	description: '', name: 'response']])
+			echo ("Response: "+userInput['response'])
+		  }
     		}
 	}
     }
