@@ -6,6 +6,7 @@ pipeline {
 
     stages {
         stage('TEST'){
+		steps {
 		def userInput = true
 		def didTimeout = false
 		try {
@@ -23,6 +24,7 @@ pipeline {
         			echo "Aborted by: [${user}]"
     			}
 		}	
-        }
+        	}
+	}
     }
 }
