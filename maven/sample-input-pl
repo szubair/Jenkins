@@ -9,10 +9,9 @@ pipeline {
 		steps {
 		  echo "hello-world!"
 		  script {
-			userInput = input(id: 'Proceed1', message: 'Was this successful?', 
-		    	parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, 
-		    	description: '', name: 'response']])
-			echo ("Response: "+userInput['response'])
+			env.testSkip = input message: 'Skip this stage or not?', 
+		    	parameters: [string(defaultValue: 'skip', description: '', name: 'response'])
+			echo "Response: ${testSkip}"
 		  }
     		}
 	}
