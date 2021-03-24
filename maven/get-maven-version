@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    tools { 
+        maven '3.6.3' 
+    }
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jenkins-docs/simple-java-maven-app.git"
+            }
+        }
+        stage('Echo Maven Version') {
+			steps {  
+			  sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout'
+	    	}
+        }
+         stage('Test Version') {
+			steps {  
+			    script {
+                    env.VERSION = sh ( script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                    returnStdout: true ).trim()
+                }
+	    	}
+        }
+        stage('TEST') {
+            steps {
+                sh "echo ${VERSION}"
+                sh "mvn versions:set -DnewVersion=${VERSION}"
+            }
+        }
+    }
+}
