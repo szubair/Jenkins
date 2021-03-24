@@ -7,24 +7,9 @@ pipeline {
     stages {
         stage('TEST'){
 		steps {
-		def userInput = true
-		def didTimeout = false
-		try {
-    	  		timeout(time: 5, unit: 'SECONDS') { // change to a convenient timeout for you
-          		userInput = input(
-            		id: 'Proceed1', message: 'Would you like to skip this stage?', parameters: [
-            		[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', 
-				name: 'Please confirm you agree with this']])}
-		} catch(err) { // timeout reached or input false
-        		def user = err.getCauses()[0].getUser()
-        		if('SYSTEM' == user.toString()) { // SYSTEM means timeout.
-          			didTimeout = true
-    			} else {
-        			userInput = false
-        			echo "Aborted by: [${user}]"
-    			}
-		}	
-        	}
+		  input 'would u like to proceed!'
+		  echo "hello-world!"
+    		}
 	}
     }
 }
