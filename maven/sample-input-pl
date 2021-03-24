@@ -3,6 +3,15 @@ pipeline {
     tools { 
         maven '3.6.3' 
     }
+
+    stages {
+        stage ('Checkout code') {
+            steps {
+                git branch: 'master', url: "https://github.com/jenkins-docs/simple-java-maven-app.git"
+            }
+        }
+
+        stage('Echo Maven Version') {
 	def userInput = true
 	def didTimeout = false
 	try {
@@ -21,14 +30,6 @@ pipeline {
         echo "Aborted by: [${user}]"
     	}
 	}	
-
-    stages {
-        stage ('Clone') {
-            steps {
-                git branch: 'master', url: "https://github.com/jenkins-docs/simple-java-maven-app.git"
-            }
-        }
-        stage('Echo Maven Version') {
 	  steps {  
 		sh 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout'
 	    	}
